@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,20 +95,20 @@
     {% endif %}
     {% if abstract %}
     <div class="cover-abstract">
-      <strong>摘要：</strong>{{ abstract }}
+      <strong>Abstract: </strong>{{ abstract }}
     </div>
     {% endif %}
     <div class="cover-meta">
-      {% if author %}<div><strong>作者：</strong> {{ author }}</div>{% endif %}
-      {% if date %}<div><strong>日期：</strong> {{ date }}</div>{% endif %}
-      {% if version %}<div><strong>版本：</strong> {{ version }}</div>{% endif %}
+      {% if author %}<div><strong>Author: </strong> {{ author }}</div>{% endif %}
+      {% if date %}<div><strong>Date: </strong> {{ date }}</div>{% endif %}
+      {% if version %}<div><strong>Version: </strong> {{ version }}</div>{% endif %}
     </div>
   </div>
   {% endif %}
 
   {% if toc_html %}
   <div class="toc avoid-break">
-    <div class="toc-title">目录 (Table of Contents)</div>
+    <div class="toc-title">Table of Contents</div>
     {{ toc_html | safe }}
   </div>
   <div class="page-break"></div>

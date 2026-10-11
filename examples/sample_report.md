@@ -1,105 +1,106 @@
 ---
-title: "Antigravity 高性能排版技术与架构报告"
-subtitle: "基于 Headless Chromium 与现代 CSS Paged Media 的高质量 PDF 输出方案"
-author: "Antigravity Engineering"
+title: "Antigravity High-Performance Typesetting & Architecture Report"
+subtitle: "A Publication-Grade PDF Generation Pipeline Powered by Headless Chromium and Modern CSS Paged Media"
+author: "haownz"
 date: "2026-10-11"
 version: "v1.0.0"
 theme: "modern"
 cover: true
-abstract: "本文档详细阐述了在 Antigravity 智能体开发环境中，如何通过 Markdown 原生语法、GitHub Flavored Callouts、KaTeX 数学公式渲染引擎以及 Headless Chromium 打印管道，实现出版级 PDF 排版与 Antigravity Artifact 双向同步预览的完整实现。"
+abstract: "This report presents the architectural design, implementation details, and typesetting optimization pipeline of the Markdown-to-PDF skill for Google Antigravity. By pairing native Markdown semantics with KaTeX vector math rendering, Pygments code syntax styling, and headless Chromium print automation, the engine delivers publication-grade PDF outputs alongside real-time interactive preview artifacts."
 ---
 
-# 1. 项目概述与设计目标
+# 1. Executive Summary & Design Principles
 
-在大型语言模型与智能体开发实践中，用户经常需要将生成的复杂分析报告、调研文档或技术方案以**出版级质量**导出为 PDF。传统的纯文本或基础 Markdown 导出通常存在以下痛点：
+In agentic programming and AI-assisted engineering workflows, exporting complex analytical write-ups, technical architecture specifications, and empirical benchmarks into **publication-grade PDF documents** is a frequent requirement. Conventional conversion toolchains often suffer from several critical shortcomings:
 
-1. **中文排版缺失**：字体粗细失真、缺失字形、换行断词不合理。
-2. **公式与图表支持差**：LaTeX 公式与 Mermaid 图表在很多后端转换库中无法矢量化渲染。
-3. **分页控制失控**：标题孤行落在页面底部（Orphan headings）、表格跨页被横腰截断。
-4. **缺少智能体环境协同**：生成 PDF 以后无法在宿主 IDE / 对话环境中即时预览。
+1. **Suboptimal Typography**: Inconsistent font hierarchies, poor fallback choices, and rigid text wrapping.
+2. **Fragile Math & Diagram Rendering**: Loss of vector clarity or missing font glyphs when rendering LaTeX equations or architecture charts.
+3. **Uncontrolled Page Breaks**: Orphaned headings (`break-after: avoid`) left hanging at the bottom of pages, and table rows sliced awkwardly across page boundaries.
+4. **Disconnection from Agent Workspaces**: Inability to immediately inspect generated documents within the host workbench.
 
 > [!NOTE]
-> `markdown-to-pdf` 技能专为解决上述痛点而设计。通过解耦排版模板与渲染核心，不仅支持本地毫秒级生成高质量 PDF，还能自动向 Antigravity 生成 Generative UI 预览 Artifact。
+> The `markdown-to-pdf` skill resolves these pain points. By decoupling typesetting styles from the underlying browser engine, it produces crisp, publication-grade PDFs while automatically emitting Generative UI artifacts for seamless Antigravity inspection.
 
 ---
 
-# 2. 核心技术架构
+# 2. System Architecture
 
-系统整体分为四个核心阶段：**Markdown 规范化与解析**、**HTML/CSS 模板注入**、**Chromium 打印引擎**以及 **Antigravity Artifact 同步**。
+The end-to-end pipeline is structured into four deterministic phases: **Markdown Normalization**, **HTML & CSS Template Injection**, **Headless Chromium Execution**, and **Antigravity Artifact Synchronization**.
 
-| 模块名称 | 核心职责 | 依赖技术 |
+| Component | Responsibility | Technology Stack |
 | :--- | :--- | :--- |
-| **Parser Engine** | 解析 Frontmatter、转换 GitHub 警示框、提取大纲 | `python-frontmatter`, `markdown` |
-| **Math & Diagram** | LaTeX 数学公式矢量化、Mermaid 流程图解析 | KaTeX, Mermaid.js |
-| **Style Themes** | 多主题排版（Modern, Academic, Report, Minimal） | CSS Paged Media (`@page`), Flexbox |
-| **Browser Runner** | 驱动本地 Chrome/Edge 无头打印 | Headless Chromium, Virtual Time Budget |
-| **Artifact Sync** | 生成 Markdown 索引与 Generative UI 预览卡片 | Antigravity Design System, TailwindCSS |
+| **Frontmatter & Markdown Parser** | Parse metadata, normalize GitHub callout badges, extract headings | `python-frontmatter`, `markdown` |
+| **Math & Diagram Engine** | Vector math formula layout, Mermaid diagram rendering | KaTeX, Mermaid.js |
+| **Theme System** | Curated styling (`modern`, `academic`, `report`, `minimal`, `github`) | CSS Paged Media (`@page`), Flexbox |
+| **Browser Runner** | Headless Chrome/Edge execution with compositor stage stabilization | Headless Chromium, Virtual Time Budget |
+| **Artifact Synchronizer** | Generative UI card and Markdown summary generation | Antigravity Design System, TailwindCSS |
 
 > [!TIP]
-> 无需安装任何庞大的第三方 GTK/Pango 动态链接库。Windows 环境下直接复用系统已有的 Google Chrome 或 Microsoft Edge 浏览器，既轻量又稳定。
+> The engine requires zero external C-dependencies or GTK/Cairo runtimes. On Windows, it leverages the pre-installed Google Chrome or Microsoft Edge browser natively, ensuring high speed and complete portability.
 
 ---
 
-# 3. 数学公式与科学计算支持
+# 3. Mathematical Formula Typesetting
 
-支持行内公式如质能方程 $E = mc^2$ 以及欧拉恒等式 $e^{i\pi} + 1 = 0$。
+The system provides first-class support for both inline math expressions, such as $E = mc^2$ and $e^{i\pi} + 1 = 0$, and multi-line display equations.
 
-同时支持多行独立公式块，例如高斯积分公式：
+For example, the classic Gaussian integral formulation:
 
 $$
 \int_{-\infty}^{+\infty} e^{-x^2} \, dx = \sqrt{\pi}
 $$
 
-以及带有求和与分式的神经网络损失函数定义：
+As well as regularized loss functions commonly used in deep learning:
 
 $$
-\mathcal{L}_{\text{total}} = -\frac{1}{N} \sum_{i=1}^N \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right] + \lambda \|\mathbf{W}\|_2^2
+\mathcal{L}_{\text{total}}(\theta) = -\frac{1}{N} \sum_{i=1}^N \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right] + \frac{\lambda}{2} \|\mathbf{W}\|_2^2
 $$
 
 > [!IMPORTANT]
-> 打印引擎配备了 `--virtual-time-budget=3000` 虚拟时间预算机制，确保 KaTeX 字体与 SVG 在生成 PDF 截图前已完成全量绘制，避免公式空白或样式错位。
+> The headless browser runner allocates a `--virtual-time-budget=3000` execution window. This guarantees that all client-side KaTeX fonts and SVG layouts are fully evaluated before capturing the PDF print stream.
 
 ---
 
-# 4. 代码高亮与代码块
+# 4. Code Block Syntax Highlighting
 
-针对智能体生成的代码片段，系统内置了 Pygments 语法高亮引擎，提供清晰易读的等宽字体（Cascadia Code / JetBrains Mono）支持：
+Technical code snippets are styled with Pygments syntax highlighting, paired with clean monospace typography (`Cascadia Code`, `JetBrains Mono`, `Consolas`):
 
 ```python
-import datetime
 from pathlib import Path
 from scripts.md_to_pdf import convert_markdown_to_pdf
 
-def build_report():
+def generate_technical_brief():
     result = convert_markdown_to_pdf(
-        input_file=Path("report.md"),
-        output_pdf=Path("dist/report.pdf"),
+        input_file=Path("architecture_spec.md"),
+        output_pdf=Path("dist/architecture_spec.pdf"),
         theme="report",
         cover_page=True,
         enable_toc=True,
+        artifact_dir=Path(".artifacts"),
     )
-    print(f"Generated {result['page_count']} pages, size: {result['file_size']}")
+    print(f"Generated {result['page_count']} pages | Size: {result['file_size']}")
 
 if __name__ == "__main__":
-    build_report()
+    generate_technical_brief()
 ```
 
 ---
 
-# 5. 特性清单与待办任务
+# 5. Core Feature Matrix
 
-- [x] 支持 GitHub 风格的 5 种 Callout 框体（Note, Tip, Important, Warning, Caution）
-- [x] 支持 LaTeX 行内与行间数学公式排版
-- [x] 支持多主题切换（现代科技、学术论文、商务研报、极简风格、GitHub风格）
-- [x] 支持封面页（Cover Page）自动排版与元数据展示
-- [x] 同步生成 Antigravity Generative UI Artifact 便于会话内即时交互
-- [ ] 后续规划：增加自定义水印背景支持
+- [x] Full support for 5 GitHub-style Callouts (`NOTE`, `TIP`, `IMPORTANT`, `WARNING`, `CAUTION`)
+- [x] High-precision LaTeX inline and block math formula rendering
+- [x] Multi-theme visual layouts (`modern`, `academic`, `report`, `minimal`, `github`)
+- [x] Formal cover page layout with author, date, version, and abstract metadata
+- [x] Automatic Table of Contents (`--toc`) generation
+- [x] Bi-directional Antigravity Generative UI Artifact synchronization
+- [ ] Planned: Dynamic watermark and custom page background overlays
 
 > [!WARNING]
-> 包含较多复杂图表的长篇文档，建议在生成时保持网络畅通以加载 KaTeX 资源，或配置离线本地静态资源缓存。
+> When compiling long-form documents containing external web assets, ensure stable network connectivity so that remote CDN resources resolve properly during the print phase.
 
 ---
 
-# 6. 总结与展望
+# 6. Conclusion
 
-通过 `markdown-to-pdf` 技能，Antigravity 能够一键将回答内容升格为出版级版面的 PDF 交付物，大幅提升方案交付与报告生成的专业度与可读性。
+With `markdown-to-pdf`, Antigravity seamlessly elevates raw markdown drafts into polished, publication-ready PDF deliverables, empowering developers and researchers with instantaneous report generation.

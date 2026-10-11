@@ -324,20 +324,20 @@ def convert_markdown_to_pdf(
 
         # 7b. Markdown Summary Artifact
         md_summary_lines = [
-            f"# 📄 {doc_title} (PDF 导出完成)",
+            f"# 📄 {doc_title} (PDF Export Complete)",
             "",
-            "> [!NOTE] 导出排版报告",
-            f"> - **文件路径**: [{output_pdf_path.name}](file:///{str(output_pdf_path).replace(chr(92), '/')})",
-            f"> - **排版主题**: `{theme_name}`",
-            f"> - **总页数**: {page_count} 页",
-            f"> - **文件大小**: {file_size_str}",
-            f"> - **生成时间**: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+            "> [!NOTE] Typesetting & Export Summary",
+            f"> - **File Path**: [{output_pdf_path.name}](file:///{str(output_pdf_path).replace(chr(92), '/')})",
+            f"> - **Theme**: `{theme_name}`",
+            f"> - **Total Pages**: {page_count}",
+            f"> - **File Size**: {file_size_str}",
+            f"> - **Generated At**: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
             "",
-            f"### [📄 点击在系统默认阅读器中打开 PDF](file:///{str(output_pdf_path).replace(chr(92), '/')})",
+            f"### [📄 Click to open PDF in default viewer](file:///{str(output_pdf_path).replace(chr(92), '/')})",
             "",
             "---",
             "",
-            "## 📖 文档内容预览",
+            "## 📖 Document Content Preview",
             "",
             body_md,
         ]
@@ -434,15 +434,15 @@ def main():
             print(json.dumps(result, ensure_ascii=False, indent=2))
         else:
             print("==================================================")
-            print("  ✨ Markdown-to-PDF 排版转换完成")
+            print("  ✨ Markdown-to-PDF Conversion Complete")
             print("==================================================")
-            print(f"📄 标题:     {result['title']}")
-            print(f"🎨 主题:     {result['theme']}")
-            print(f"📑 页数:     {result['page_count']} 页")
-            print(f"💾 大小:     {result['file_size']}")
-            print(f"📍 PDF路径:  {result['pdf_path']}")
+            print(f"📄 Title:      {result['title']}")
+            print(f"🎨 Theme:      {result['theme']}")
+            print(f"📑 Pages:      {result['page_count']}")
+            print(f"💾 File Size:  {result['file_size']}")
+            print(f"📍 PDF Path:   {result['pdf_path']}")
             if result.get("artifacts"):
-                print("🎯 Artifact 输出:")
+                print("🎯 Artifact Outputs:")
                 for k, v in result["artifacts"].items():
                     print(f"   • {k}: {v}")
             print("==================================================")
