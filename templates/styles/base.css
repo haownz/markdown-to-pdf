@@ -1,0 +1,355 @@
+/* Base Styles for Markdown-to-PDF Conversion */
+
+:root {
+  --primary-color: #2563eb;
+  --text-color: #1e293b;
+  --bg-color: #ffffff;
+  --border-color: #e2e8f0;
+  --code-bg: #f8fafc;
+  --muted-text: #64748b;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-serif: "Georgia", "Cambria", "Times New Roman", "Songti SC", "SimSun", serif;
+  --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, Monaco, monospace;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 20mm 18mm 20mm 18mm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  line-height: 1.65;
+  font-size: 10.5pt;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #0f172a;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+h1 {
+  font-size: 20pt;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--primary-color);
+  margin-top: 0.8em;
+}
+
+h2 {
+  font-size: 15pt;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h3 { font-size: 12.5pt; }
+h4 { font-size: 11pt; }
+h5 { font-size: 10.5pt; }
+h6 { font-size: 10pt; color: var(--muted-text); }
+
+p {
+  margin: 0.7em 0;
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
+/* Page Break Controls */
+.page-break {
+  page-break-after: always;
+  break-after: page;
+}
+
+.avoid-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Blockquotes */
+blockquote {
+  margin: 1em 0;
+  padding: 0.6em 1.2em;
+  border-left: 4px solid var(--primary-color);
+  background-color: #f8fafc;
+  color: #475569;
+  border-radius: 0 6px 6px 0;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+
+/* GitHub-style Admonitions / Callouts */
+.callout {
+  margin: 1.2em 0;
+  padding: 0.9em 1.2em;
+  border-radius: 8px;
+  border-left: 5px solid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.callout .callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 600;
+  font-size: 10pt;
+  margin-bottom: 0.4em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.callout p {
+  margin: 0.4em 0;
+  font-size: 10pt;
+}
+
+.callout p:first-child { margin-top: 0; }
+.callout p:last-child { margin-bottom: 0; }
+
+.callout-note {
+  border-color: #2563eb;
+  background-color: #eff6ff;
+  color: #1e40af;
+}
+
+.callout-tip {
+  border-color: #10b981;
+  background-color: #ecfdf5;
+  color: #065f46;
+}
+
+.callout-important {
+  border-color: #8b5cf6;
+  background-color: #f5f3ff;
+  color: #5b21b6;
+}
+
+.callout-warning {
+  border-color: #f59e0b;
+  background-color: #fffbeb;
+  color: #92400e;
+}
+
+.callout-caution {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+  color: #991b1b;
+}
+
+/* Code & Syntax Highlighting */
+code {
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+pre {
+  margin: 1em 0;
+  padding: 1em;
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow-x: auto;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+pre code {
+  font-size: 8.5pt;
+  line-height: 1.5;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2em 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+th, td {
+  padding: 7px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+tr:nth-child(even) td {
+  background-color: #fafbfc;
+}
+
+/* Images & Figures */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 1em auto;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+figure {
+  margin: 1.2em 0;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+figcaption {
+  font-size: 9pt;
+  color: var(--muted-text);
+  margin-top: 0.5em;
+}
+
+/* Lists */
+ul, ol {
+  margin: 0.7em 0;
+  padding-left: 1.8em;
+}
+
+li {
+  margin: 0.3em 0;
+}
+
+li input[type="checkbox"] {
+  margin-right: 0.4em;
+  vertical-align: middle;
+}
+
+/* Math (KaTeX) */
+.katex-display {
+  margin: 1em 0 !important;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Mermaid Diagrams */
+.mermaid {
+  text-align: center;
+  margin: 1.5em 0;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Cover Page */
+.cover-page {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 2em;
+  page-break-after: always;
+  break-after: page;
+}
+
+.cover-title {
+  font-size: 28pt;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.4em;
+  line-height: 1.2;
+}
+
+.cover-subtitle {
+  font-size: 14pt;
+  color: var(--muted-text);
+  margin-bottom: 2em;
+}
+
+.cover-meta {
+  margin-top: 3em;
+  font-size: 11pt;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.cover-abstract {
+  margin: 2em auto;
+  max-width: 80%;
+  padding: 1.2em;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-align: left;
+  font-size: 10pt;
+}
+
+/* Table of Contents */
+.toc {
+  margin: 1.5em 0 2em 0;
+  padding: 1.2em;
+  background-color: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.toc-title {
+  font-size: 12pt;
+  font-weight: 600;
+  margin-bottom: 0.8em;
+  color: #0f172a;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.4em;
+}
+
+.toc ul {
+  list-style-type: none;
+  padding-left: 1em;
+}
+
+.toc li {
+  margin: 0.4em 0;
+}
+
+.toc a {
+  color: #334155;
+}
+
+.toc a:hover {
+  color: var(--primary-color);
+}

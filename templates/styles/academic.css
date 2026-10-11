@@ -1,0 +1,90 @@
+/* Academic Theme - Formal, scholarly, paper publication aesthetic */
+
+:root {
+  --primary-color: #7f1d1d;
+  --text-color: #111827;
+  --bg-color: #ffffff;
+  --border-color: #d1d5db;
+  --code-bg: #f9fafb;
+  --muted-text: #4b5563;
+}
+
+body {
+  font-family: "Georgia", "Cambria", "Times New Roman", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  font-size: 10pt;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #111827;
+}
+
+h1 {
+  font-size: 18pt;
+  text-align: center;
+  border-bottom: 1.5px solid #111827;
+  padding-bottom: 0.4em;
+  margin-top: 1em;
+}
+
+h2 {
+  font-size: 13pt;
+  border-bottom: 1px solid #9ca3af;
+  padding-bottom: 0.2em;
+}
+
+h3 {
+  font-size: 11pt;
+}
+
+p {
+  text-indent: 2em;
+  text-align: justify;
+}
+
+blockquote p {
+  text-indent: 0;
+}
+
+/* Booktabs Table Style */
+table {
+  border-top: 2px solid #111827;
+  border-bottom: 2px solid #111827;
+  border-collapse: collapse;
+  margin: 1.5em auto;
+}
+
+table th, table td {
+  border-left: none;
+  border-right: none;
+  padding: 8px 14px;
+}
+
+table th {
+  border-top: none;
+  border-bottom: 1px solid #111827;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) td {
+  background-color: transparent;
+}
+
+blockquote {
+  border-left: 3px solid #6b7280;
+  background-color: #f9fafb;
+  font-style: italic;
+}
+
+pre {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+
+code:not(pre code) {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+}
